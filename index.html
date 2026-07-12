@@ -169,11 +169,13 @@
       z-index: 1;
     }
 
-    .lab-flask {
-      width: 26px;
-      height: 26px;
-      color: #89b8ff;
-      filter: drop-shadow(0 0 9px rgba(83, 148, 255, .55));
+    .growbot-avatar {
+      width: 42px;
+      height: 42px;
+      border: 2px solid rgba(190, 255, 225, .78);
+      border-radius: 50%;
+      object-fit: cover;
+      box-shadow: 0 0 0 3px rgba(67, 225, 255, .12), 0 5px 18px rgba(0, 0, 0, .28);
     }
 
     .lab-bubble {
@@ -269,11 +271,7 @@
     <span class="lab-bubble two" aria-hidden="true"></span>
     <span class="lab-bubble three" aria-hidden="true"></span>
     <span class="lab-title">
-      <svg class="lab-flask" viewBox="0 0 32 32" aria-hidden="true">
-        <path d="M12 3h8M14 3v9L7.5 23.2A3.8 3.8 0 0 0 10.8 29h10.4a3.8 3.8 0 0 0 3.3-5.8L18 12V3M10 21h12" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
-        <circle cx="14" cy="24" r="1.4" fill="currentColor"/>
-        <circle cx="19" cy="21.5" r="1" fill="currentColor"/>
-      </svg>
+      <img class="growbot-avatar" src="assets/growbot-profile.webp" alt="GrowBot" width="42" height="42">
       GrowBot Test Laboratory
     </span>
   </header>

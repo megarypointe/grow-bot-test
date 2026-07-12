@@ -15,7 +15,8 @@ test('shows a minimal GrowBot science laboratory header above the chat button', 
   assert.equal((body.match(/<button\b/gi) || []).length, 1);
   assert.match(body, /<header[^>]+class="lab-header"/i);
   assert.match(body, /GrowBot Test Laboratory/);
-  assert.match(body, /class="lab-flask"/);
+  assert.match(body, /<img[^>]+class="growbot-avatar"[^>]+src="assets\/growbot-profile\.webp"[^>]+alt="GrowBot"/i);
+  assert.doesNotMatch(body, /class="lab-flask"/);
   assert.match(body, /class="lab-bubble/);
   assert.match(body, /<button[^>]+id="open-chat"[^>]*>Loading chat…<\/button>/i);
   assert.doesNotMatch(body, /<h1|<p\b|<aside|Separate from|production/i);
