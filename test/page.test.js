@@ -9,11 +9,12 @@ function page() {
   return fs.readFileSync(pagePath, 'utf8');
 }
 
-test('identifies the page as an isolated Grow Bot test environment', () => {
+test('shows only one chat button on the page', () => {
   const html = page();
-  assert.match(html, /Grow Bot/i);
-  assert.match(html, /Test environment/i);
-  assert.match(html, /separate from (the )?live|not.*production/i);
+  const body = html.match(/<body>([\s\S]*?)<script>/i)?.[1] || '';
+  assert.equal((body.match(/<button\b/gi) || []).length, 1);
+  assert.match(body, /<button[^>]+id="open-chat"[^>]*>Loading chat…<\/button>/i);
+  assert.doesNotMatch(body, /<header|<h1|<p\b|<aside|Test environment|Grow Bot/i);
   assert.match(html, /noindex/i);
 });
 
@@ -28,12 +29,12 @@ test('loads only the Intercom test workspace for anonymous visitors', () => {
 test('offers a clear chat action and verifies Messenger visibility', () => {
   const html = page();
   assert.match(html, /id="open-chat"/);
-  assert.match(html, /Open test chat/i);
+  assert.match(html, /Open chat/i);
   assert.match(html, /id="messenger-status"/);
   assert.match(html, /Intercom\(['"]onShow['"],\s*markOpened\)/);
   assert.match(html, /Intercom\(['"]show['"]\)/);
   assert.match(html, /openingTimer/);
-  assert.match(html, /Unable to load|couldn.t (load|open)/i);
+  assert.match(html, /could not (load|open)/i);
   assert.doesNotMatch(html, /Test Messenger is ready/i);
 });
 

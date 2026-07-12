@@ -4,155 +4,53 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="robots" content="noindex, nofollow, noarchive">
-  <meta name="description" content="Private Grow Bot test environment for testing a separate Intercom Messenger experience.">
-  <title>Grow Bot — Test Environment</title>
+  <title>Grow Bot Chat</title>
   <link rel="preconnect" href="https://widget.intercom.io">
   <link rel="preconnect" href="https://js.intercomcdn.com">
   <style>
     :root {
-      --ink: #171717;
-      --muted: #66645f;
-      --cream: #faf9f6;
-      --surface: #fff;
-      --oat: #dedbd6;
-      --green: #d7f870;
-      --green-dark: #24320d;
-      --orange: #ff5600;
+      color-scheme: light;
+      --background: #faf9f6;
+      --button: #171717;
+      --button-text: #ffffff;
+      --button-hover: #d7f870;
+      --button-hover-text: #24320d;
       --focus: #3157d5;
     }
 
     * { box-sizing: border-box; }
 
-    html { min-height: 100%; background: var(--cream); }
+    html, body { min-height: 100%; }
 
     body {
+      display: grid;
+      place-items: center;
       min-height: 100vh;
       margin: 0;
-      color: var(--ink);
-      background:
-        radial-gradient(circle at 88% 14%, rgba(215, 248, 112, .32), transparent 24rem),
-        var(--cream);
+      padding: 24px;
+      background: var(--background);
       font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
       -webkit-font-smoothing: antialiased;
     }
 
-    button { font: inherit; }
-
-    .site-header {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      min-height: 72px;
-      padding: 16px clamp(20px, 5vw, 72px);
-      border-bottom: 1px solid var(--oat);
-      background: rgba(250, 249, 246, .86);
-      backdrop-filter: blur(12px);
-    }
-
-    .brand {
-      display: inline-flex;
-      align-items: center;
-      gap: 11px;
-      font-size: 18px;
-      font-weight: 700;
-      letter-spacing: -.03em;
-    }
-
-    .brand-mark {
-      display: grid;
-      place-items: center;
-      width: 34px;
-      height: 34px;
-      border-radius: 50%;
-      background: var(--green);
-      color: var(--green-dark);
-      font-size: 14px;
-      font-weight: 800;
-    }
-
-    .environment-badge {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      padding: 8px 10px;
-      border: 1px solid var(--oat);
-      border-radius: 4px;
-      background: var(--surface);
-      font: 700 11px/1 ui-monospace, SFMono-Regular, Menlo, monospace;
-      letter-spacing: .08em;
-      text-transform: uppercase;
-    }
-
-    .environment-badge::before {
-      width: 7px;
-      height: 7px;
-      border-radius: 50%;
-      background: var(--orange);
-      content: "";
-    }
-
-    main {
-      display: grid;
-      place-items: center;
-      min-height: calc(100vh - 72px);
-      padding: clamp(44px, 8vw, 112px) 20px;
-    }
-
-    .hero {
-      width: min(860px, 100%);
-      text-align: center;
-    }
-
-    .eyebrow {
-      margin: 0 0 22px;
-      color: var(--muted);
-      font: 600 12px/1.2 ui-monospace, SFMono-Regular, Menlo, monospace;
-      letter-spacing: .1em;
-      text-transform: uppercase;
-    }
-
-    h1 {
-      max-width: 800px;
-      margin: 0 auto;
-      font-size: clamp(48px, 8vw, 86px);
-      font-weight: 650;
-      line-height: .96;
-      letter-spacing: -.065em;
-    }
-
-    .lede {
-      max-width: 610px;
-      margin: 28px auto 0;
-      color: var(--muted);
-      font-size: clamp(17px, 2vw, 20px);
-      line-height: 1.55;
-      letter-spacing: -.015em;
-    }
-
-    .actions {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      gap: 12px;
-      margin-top: 38px;
-    }
+    main { display: contents; }
 
     .primary-action {
       min-width: 190px;
-      padding: 15px 20px;
-      border: 1px solid var(--ink);
-      border-radius: 4px;
-      background: var(--ink);
-      color: #fff;
+      padding: 16px 24px;
+      border: 1px solid var(--button);
+      border-radius: 6px;
+      background: var(--button);
+      color: var(--button-text);
       cursor: pointer;
-      font-weight: 650;
+      font: 650 16px/1.2 inherit;
       transition: transform 160ms ease, background 160ms ease, color 160ms ease;
     }
 
     .primary-action:hover:not(:disabled) {
       transform: translateY(-2px);
-      background: var(--green);
-      color: var(--green-dark);
+      background: var(--button-hover);
+      color: var(--button-hover-text);
     }
 
     .primary-action:focus-visible {
@@ -165,72 +63,24 @@
       opacity: .62;
     }
 
-    .status-wrap {
-      min-height: 24px;
-      margin-top: 18px;
-    }
-
-    #messenger-status {
-      margin: 0;
-      color: var(--muted);
-      font-size: 13px;
-      line-height: 1.5;
-    }
-
-    #messenger-status[data-state="error"] { color: #a02b1f; }
-
-    .test-note {
-      display: grid;
-      grid-template-columns: auto 1fr;
-      gap: 12px;
-      max-width: 570px;
-      margin: 48px auto 0;
-      padding: 18px;
-      border: 1px solid var(--oat);
-      border-radius: 8px;
-      background: rgba(255, 255, 255, .72);
-      text-align: left;
-    }
-
-    .note-icon {
-      display: grid;
-      place-items: center;
-      width: 28px;
-      height: 28px;
-      border-radius: 50%;
-      background: var(--green);
-      color: var(--green-dark);
-      font-size: 14px;
-      font-weight: 800;
-    }
-
-    .test-note strong {
-      display: block;
-      margin: 1px 0 5px;
-      font-size: 14px;
-    }
-
-    .test-note p {
-      margin: 0;
-      color: var(--muted);
-      font-size: 13px;
-      line-height: 1.5;
+    .visually-hidden {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      padding: 0;
+      margin: -1px;
+      overflow: hidden;
+      clip: rect(0, 0, 0, 0);
+      white-space: nowrap;
+      border: 0;
     }
 
     @media (max-width: 600px) {
-      .site-header { min-height: 64px; padding: 14px 18px; }
-      .brand { font-size: 16px; }
-      .brand-mark { width: 30px; height: 30px; }
-      main { min-height: calc(100vh - 64px); padding: 54px 18px 110px; }
-      h1 { font-size: clamp(45px, 15vw, 64px); }
-      .lede { margin-top: 22px; font-size: 17px; }
-      .actions, .primary-action { width: 100%; }
-      .test-note { margin-top: 36px; }
+      .primary-action { width: min(100%, 320px); }
     }
 
     @media (prefers-reduced-motion: reduce) {
       *, *::before, *::after {
-        scroll-behavior: auto !important;
         transition-duration: .01ms !important;
         animation-duration: .01ms !important;
         animation-iteration-count: 1 !important;
@@ -239,35 +89,9 @@
   </style>
 </head>
 <body>
-  <header class="site-header">
-    <div class="brand" aria-label="Grow Bot">
-      <span class="brand-mark" aria-hidden="true">G</span>
-      <span>Grow Bot</span>
-    </div>
-    <div class="environment-badge">Test environment</div>
-  </header>
-
   <main>
-    <section class="hero" aria-labelledby="page-title">
-      <p class="eyebrow">Isolated support prototype</p>
-      <h1 id="page-title">Meet the new Grow support assistant.</h1>
-      <p class="lede">This page is a safe place to test a completely separate chat experience before it reaches the Grow website.</p>
-
-      <div class="actions">
-        <button class="primary-action" id="open-chat" type="button" disabled>Loading test chat…</button>
-      </div>
-      <div class="status-wrap">
-        <p id="messenger-status" aria-live="polite">Connecting to the Intercom test workspace.</p>
-      </div>
-
-      <aside class="test-note" aria-label="Testing notice">
-        <span class="note-icon" aria-hidden="true">i</span>
-        <div>
-          <strong>Separate from the live chatbot</strong>
-          <p>Messages sent here are test conversations. This page does not use the production Intercom workspace or affect real site visitors.</p>
-        </div>
-      </aside>
-    </section>
+    <button class="primary-action" id="open-chat" type="button" disabled>Loading chat…</button>
+    <span class="visually-hidden" id="messenger-status" aria-live="polite">Connecting to chat.</span>
   </main>
 
   <script>
@@ -285,17 +109,15 @@
         if (loaderReady || failed) return;
         loaderReady = true;
         button.disabled = false;
-        button.textContent = 'Open test chat';
-        status.textContent = 'Test Messenger loaded. Open it to verify the connection.';
-        status.dataset.state = 'loaded';
+        button.textContent = 'Open chat';
+        status.textContent = 'Chat loaded. Open it to continue.';
       };
 
       const markOpened = () => {
         window.clearTimeout(openingTimer);
         button.disabled = false;
-        button.textContent = 'Open test chat';
-        status.textContent = 'Test Messenger opened successfully.';
-        status.dataset.state = 'ready';
+        button.textContent = 'Open chat';
+        status.textContent = 'Chat opened successfully.';
       };
 
       const markFailed = () => {
@@ -303,16 +125,14 @@
         failed = true;
         window.clearTimeout(openingTimer);
         button.disabled = true;
-        button.textContent = 'Test chat unavailable';
-        status.textContent = "We couldn’t load the test Messenger. Refresh the page or check content-blocking settings.";
-        status.dataset.state = 'error';
+        button.textContent = 'Chat unavailable';
+        status.textContent = 'Chat could not load. Refresh the page or check content-blocking settings.';
       };
 
       const markOpenFailed = () => {
         button.disabled = false;
-        button.textContent = 'Try opening again';
-        status.textContent = "We couldn’t open the test Messenger. Try again or disable content blocking for this page.";
-        status.dataset.state = 'error';
+        button.textContent = 'Try again';
+        status.textContent = 'Chat could not open. Try again or disable content blocking for this page.';
       };
 
       window.Intercom = window.Intercom || function () {
@@ -338,9 +158,8 @@
       button.addEventListener('click', () => {
         if (!loaderReady || failed) return;
         button.disabled = true;
-        button.textContent = 'Opening test chat…';
-        status.textContent = 'Opening the Intercom test Messenger.';
-        status.dataset.state = 'opening';
+        button.textContent = 'Opening chat…';
+        status.textContent = 'Opening chat.';
         window.Intercom('show');
         window.clearTimeout(openingTimer);
         openingTimer = window.setTimeout(markOpenFailed, 8000);
