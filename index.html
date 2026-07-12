@@ -26,7 +26,6 @@
     body {
       position: relative;
       display: grid;
-      grid-template-rows: auto 1fr;
       min-height: 100vh;
       margin: 0;
       overflow: hidden;
@@ -45,7 +44,7 @@
       inset: -2.5%;
       z-index: 0;
       pointer-events: none;
-      background-image: url("assets/growbot-dinosaurs-space.webp");
+      background-image: url("assets/growbot-robot-dinosaurs-space.webp");
       background-position: center center;
       background-size: cover;
       filter: saturate(1.08) contrast(1.03);
@@ -145,61 +144,33 @@
       to { opacity: .42; filter: blur(.8px); }
     }
 
-    .lab-header {
-      position: relative;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      z-index: 2;
-      min-height: 62px;
-      padding: 14px 24px;
-      border-bottom: 1px solid rgba(184, 218, 255, .15);
-      overflow: hidden;
-      background: rgba(5, 13, 29, .52);
-      box-shadow: 0 1px 30px rgba(54, 127, 255, .08);
-      backdrop-filter: blur(18px);
-      font-weight: 750;
-      letter-spacing: -.02em;
-    }
-
-    .lab-title {
-      display: inline-flex;
-      align-items: center;
-      gap: 10px;
-      z-index: 1;
-    }
-
-    .growbot-avatar {
-      width: 42px;
-      height: 42px;
-      border: 2px solid rgba(190, 255, 225, .78);
-      border-radius: 50%;
-      object-fit: cover;
-      box-shadow: 0 0 0 3px rgba(67, 225, 255, .12), 0 5px 18px rgba(0, 0, 0, .28);
-    }
-
-    .lab-bubble {
-      position: absolute;
-      border-radius: 50%;
-      background: rgba(122, 229, 130, .55);
-      animation: float 3.2s ease-in-out infinite;
-    }
-
-    .lab-bubble.one { width: 9px; height: 9px; left: 8%; top: 15px; }
-    .lab-bubble.two { width: 14px; height: 14px; right: 10%; top: 30px; animation-delay: -1s; }
-    .lab-bubble.three { width: 6px; height: 6px; right: 17%; top: 13px; animation-delay: -2s; }
-
     main {
       position: relative;
       z-index: 1;
       display: grid;
       place-items: center;
+      min-height: 100vh;
       padding: 24px;
     }
 
-    @keyframes float {
-      0%, 100% { transform: translateY(0); }
-      50% { transform: translateY(-7px); }
+    .launch-panel {
+      display: grid;
+      justify-items: center;
+      gap: 24px;
+      width: min(680px, 100%);
+      padding: 34px 28px 38px;
+      text-align: center;
+    }
+
+    h1 {
+      margin: 0;
+      color: #fff;
+      font-size: clamp(30px, 5vw, 58px);
+      font-weight: 760;
+      line-height: .98;
+      letter-spacing: -.055em;
+      text-wrap: balance;
+      text-shadow: 0 3px 24px rgba(0, 0, 0, .86), 0 0 42px rgba(76, 202, 255, .32);
     }
 
     .primary-action {
@@ -266,18 +237,12 @@
   <div class="distant-galaxy galaxy-one" aria-hidden="true"></div>
   <div class="distant-galaxy galaxy-two" aria-hidden="true"></div>
   <div class="cosmic-dust" aria-hidden="true"></div>
-  <header class="lab-header">
-    <span class="lab-bubble one" aria-hidden="true"></span>
-    <span class="lab-bubble two" aria-hidden="true"></span>
-    <span class="lab-bubble three" aria-hidden="true"></span>
-    <span class="lab-title">
-      <img class="growbot-avatar" src="assets/growbot-profile.webp" alt="GrowBot" width="42" height="42">
-      GrowBot Test Laboratory
-    </span>
-  </header>
   <main>
-    <button class="primary-action" id="open-chat" type="button" disabled>Loading chat…</button>
-    <span class="visually-hidden" id="messenger-status" aria-live="polite">Connecting to chat.</span>
+    <section class="launch-panel" aria-labelledby="page-title">
+      <h1 id="page-title">GrowBot Test Laboratory</h1>
+      <button class="primary-action" id="open-chat" type="button" disabled>Loading chat…</button>
+      <span class="visually-hidden" id="messenger-status" aria-live="polite">Connecting to chat.</span>
+    </section>
   </main>
 
   <script>

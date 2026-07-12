@@ -9,25 +9,30 @@ function page() {
   return fs.readFileSync(pagePath, 'utf8');
 }
 
-test('shows a minimal GrowBot science laboratory header above the chat button', () => {
+test('centers the laboratory title above the chat button without a top bar or page avatar', () => {
   const html = page();
   const body = html.match(/<body>([\s\S]*?)<script>/i)?.[1] || '';
   assert.equal((body.match(/<button\b/gi) || []).length, 1);
-  assert.match(body, /<header[^>]+class="lab-header"/i);
-  assert.match(body, /GrowBot Test Laboratory/);
-  assert.match(body, /<img[^>]+class="growbot-avatar"[^>]+src="assets\/growbot-profile\.webp"[^>]+alt="GrowBot"/i);
-  assert.doesNotMatch(body, /class="lab-flask"/);
-  assert.match(body, /class="lab-bubble/);
+  assert.match(body, /<main[^>]*>[\s\S]*class="launch-panel"[\s\S]*<h1[^>]+id="page-title"[^>]*>GrowBot Test Laboratory<\/h1>[\s\S]*id="open-chat"/i);
+  assert.doesNotMatch(body, /<header|class="growbot-avatar"|growbot-profile\.webp/);
   assert.match(body, /<button[^>]+id="open-chat"[^>]*>Loading chat…<\/button>/i);
-  assert.doesNotMatch(body, /<h1|<p\b|<aside|Separate from|production/i);
+  assert.doesNotMatch(body, /<p\b|<aside|Separate from|production/i);
   assert.match(html, /noindex/i);
+});
+
+test('uses a polished friendly robot-dinosaur space landscape', () => {
+  const html = page();
+  assert.match(html, /class="space-backdrop"/);
+  assert.match(html, /assets\/growbot-robot-dinosaurs-space\.webp/);
+  assert.match(html, /background-position:\s*center center/);
+  assert.match(html, /\.space-backdrop::after/);
 });
 
 test('keeps the foreground still with subtle fluid deep-space motion', () => {
   const html = page();
   assert.ok(fs.existsSync(path.join(__dirname, '..', 'assets', 'growbot-dinosaur-jungle.webp')));
   assert.match(html, /class="space-backdrop"/);
-  assert.match(html, /assets\/growbot-dinosaurs-space\.webp/);
+  assert.match(html, /assets\/growbot-robot-dinosaurs-space\.webp/);
   assert.match(html, /class="deep-space-flow"/);
   assert.match(html, /class="distant-galaxy galaxy-one"/);
   assert.match(html, /class="distant-galaxy galaxy-two"/);
