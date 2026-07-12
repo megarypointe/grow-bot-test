@@ -28,6 +28,16 @@ test('uses a polished friendly robot-dinosaur space landscape', () => {
   assert.match(html, /\.space-backdrop::after/);
 });
 
+test('uses restrained title typography and the GrowBot dinosaur favicon', () => {
+  const html = page();
+  assert.match(html, /<link\s+rel="icon"\s+type="image\/png"\s+sizes="32x32"\s+href="assets\/favicon-32\.png">/i);
+  assert.match(html, /<link\s+rel="apple-touch-icon"\s+href="assets\/apple-touch-icon\.png">/i);
+  assert.match(html, /h1\s*\{[\s\S]*?font-size:\s*clamp\(24px,\s*3\.5vw,\s*42px\)/);
+  assert.match(html, /h1\s*\{[\s\S]*?font-weight:\s*500/);
+  assert.ok(fs.existsSync(path.join(__dirname, '..', 'assets', 'favicon-32.png')));
+  assert.ok(fs.existsSync(path.join(__dirname, '..', 'assets', 'apple-touch-icon.png')));
+});
+
 test('keeps the foreground still with subtle fluid deep-space motion', () => {
   const html = page();
   assert.ok(fs.existsSync(path.join(__dirname, '..', 'assets', 'growbot-dinosaur-jungle.webp')));
