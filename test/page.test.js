@@ -27,12 +27,15 @@ test('renders a saved jungle version and a mouse-reactive dinosaur space scene',
   assert.ok(fs.existsSync(path.join(__dirname, '..', 'assets', 'growbot-dinosaur-jungle.webp')));
   assert.match(html, /class="space-backdrop"/);
   assert.match(html, /assets\/growbot-dinosaurs-space\.webp/);
-  assert.match(html, /class="space-stars space-stars-near"/);
-  assert.match(html, /class="space-stars space-stars-far"/);
-  assert.match(html, /class="space-comet"/);
+  assert.match(html, /class="cosmic-drift cosmic-drift-one"/);
+  assert.match(html, /class="cosmic-drift cosmic-drift-two"/);
+  assert.match(html, /class="cosmic-drift cosmic-drift-three"/);
+  assert.match(html, /class="cosmic-dust"/);
+  assert.match(html, /@keyframes\s+aurora-drift/);
   assert.match(html, /--pointer-x/);
   assert.match(html, /pointermove/);
   assert.match(html, /requestAnimationFrame/);
+  assert.doesNotMatch(html, /class="space-stars|background-size:\s*83px|background-size:\s*127px|class="space-comet"/);
   assert.match(html, /background-position:\s*center center/);
   assert.match(html, /\.space-backdrop::after/);
   assert.doesNotMatch(html, /class="dinosaur-backdrop"/);
