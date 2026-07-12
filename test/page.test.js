@@ -22,14 +22,13 @@ test('shows a minimal GrowBot science laboratory header above the chat button', 
   assert.match(html, /noindex/i);
 });
 
-test('renders an immersive animated laboratory background', () => {
+test('renders a lush illustrated dinosaur jungle background', () => {
   const html = page();
-  assert.match(html, /class="lab-backdrop"/);
-  assert.match(html, /class="molecule molecule-one"/);
-  assert.match(html, /class="molecule molecule-two"/);
-  assert.match(html, /class="experiment-glow"/);
-  assert.match(html, /linear-gradient\([^;]+lab-grid/i);
-  assert.match(html, /@keyframes\s+drift/);
+  assert.match(html, /class="dinosaur-backdrop"/);
+  assert.match(html, /assets\/growbot-dinosaur-jungle\.webp/);
+  assert.match(html, /background-position:\s*center center/);
+  assert.match(html, /\.dinosaur-backdrop::after/);
+  assert.doesNotMatch(html, /class="lab-backdrop"|class="molecule|class="experiment-glow"/);
 });
 
 test('loads only the Intercom test workspace for anonymous visitors', () => {
