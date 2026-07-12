@@ -9,12 +9,16 @@ function page() {
   return fs.readFileSync(pagePath, 'utf8');
 }
 
-test('shows only one chat button on the page', () => {
+test('shows a minimal GrowBot science laboratory header above the chat button', () => {
   const html = page();
   const body = html.match(/<body>([\s\S]*?)<script>/i)?.[1] || '';
   assert.equal((body.match(/<button\b/gi) || []).length, 1);
+  assert.match(body, /<header[^>]+class="lab-header"/i);
+  assert.match(body, /GrowBot Test Laboratory/);
+  assert.match(body, /class="lab-flask"/);
+  assert.match(body, /class="lab-bubble/);
   assert.match(body, /<button[^>]+id="open-chat"[^>]*>Loading chat…<\/button>/i);
-  assert.doesNotMatch(body, /<header|<h1|<p\b|<aside|Test environment|Grow Bot/i);
+  assert.doesNotMatch(body, /<h1|<p\b|<aside|Separate from|production/i);
   assert.match(html, /noindex/i);
 });
 
