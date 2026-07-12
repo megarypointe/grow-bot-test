@@ -62,7 +62,7 @@ test('offers a clear chat action and verifies Messenger visibility', () => {
 
 test('configures the approved standalone hostname', () => {
   const cnamePath = path.join(__dirname, '..', 'CNAME');
-  assert.equal(fs.readFileSync(cnamePath, 'utf8').trim(), 'chat.growpage.org');
+  assert.equal(fs.readFileSync(cnamePath, 'utf8').trim(), 'growbot.chat');
 });
 
 test('uses accessible and responsive page foundations', () => {
