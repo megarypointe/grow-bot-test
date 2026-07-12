@@ -22,6 +22,16 @@ test('shows a minimal GrowBot science laboratory header above the chat button', 
   assert.match(html, /noindex/i);
 });
 
+test('renders an immersive animated laboratory background', () => {
+  const html = page();
+  assert.match(html, /class="lab-backdrop"/);
+  assert.match(html, /class="molecule molecule-one"/);
+  assert.match(html, /class="molecule molecule-two"/);
+  assert.match(html, /class="experiment-glow"/);
+  assert.match(html, /linear-gradient\([^;]+lab-grid/i);
+  assert.match(html, /@keyframes\s+drift/);
+});
+
 test('loads only the Intercom test workspace for anonymous visitors', () => {
   const html = page();
   assert.match(html, /data-intercom-app-id="kxriovvt"/);
