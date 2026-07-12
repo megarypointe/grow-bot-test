@@ -22,20 +22,19 @@ test('shows a minimal GrowBot science laboratory header above the chat button', 
   assert.match(html, /noindex/i);
 });
 
-test('renders a saved jungle version and a mouse-reactive dinosaur space scene', () => {
+test('keeps the foreground still with subtle fluid deep-space motion', () => {
   const html = page();
   assert.ok(fs.existsSync(path.join(__dirname, '..', 'assets', 'growbot-dinosaur-jungle.webp')));
   assert.match(html, /class="space-backdrop"/);
   assert.match(html, /assets\/growbot-dinosaurs-space\.webp/);
-  assert.match(html, /class="cosmic-drift cosmic-drift-one"/);
-  assert.match(html, /class="cosmic-drift cosmic-drift-two"/);
-  assert.match(html, /class="cosmic-drift cosmic-drift-three"/);
+  assert.match(html, /class="deep-space-flow"/);
+  assert.match(html, /class="distant-galaxy galaxy-one"/);
+  assert.match(html, /class="distant-galaxy galaxy-two"/);
   assert.match(html, /class="cosmic-dust"/);
-  assert.match(html, /@keyframes\s+aurora-drift/);
-  assert.match(html, /--pointer-x/);
-  assert.match(html, /pointermove/);
-  assert.match(html, /requestAnimationFrame/);
-  assert.doesNotMatch(html, /class="space-stars|background-size:\s*83px|background-size:\s*127px|class="space-comet"/);
+  assert.match(html, /@keyframes\s+water-flow/);
+  assert.match(html, /@keyframes\s+galaxy-turn/);
+  assert.doesNotMatch(html, /--pointer-x|pointermove|requestAnimationFrame|translate3d\(calc\(var\(--pointer/);
+  assert.doesNotMatch(html, /class="space-stars|background-size:\s*83px|background-size:\s*127px|class="space-comet"|class="cosmic-drift/);
   assert.match(html, /background-position:\s*center center/);
   assert.match(html, /\.space-backdrop::after/);
   assert.doesNotMatch(html, /class="dinosaur-backdrop"/);

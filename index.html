@@ -49,9 +49,7 @@
       background-position: center center;
       background-size: cover;
       filter: saturate(1.08) contrast(1.03);
-      transform: translate3d(calc(var(--pointer-x, 0) * -10px), calc(var(--pointer-y, 0) * -7px), 0) scale(1.055);
-      transition: transform 120ms ease-out;
-      will-change: transform;
+      transform: scale(1.035);
     }
 
     .space-backdrop::before {
@@ -70,82 +68,81 @@
       content: "";
     }
 
-    .cosmic-drift {
+    .deep-space-flow {
       position: fixed;
-      z-index: 1;
+      inset: -28%;
+      z-index: 0;
       pointer-events: none;
-      border-radius: 50%;
-      filter: blur(44px);
+      background:
+        repeating-radial-gradient(ellipse at 24% 44%, rgba(86, 191, 255, .12) 0 3%, transparent 7% 14%),
+        repeating-radial-gradient(ellipse at 76% 58%, rgba(156, 93, 255, .1) 0 2%, transparent 6% 17%),
+        conic-gradient(from 110deg at 54% 48%, transparent, rgba(75, 215, 255, .08), transparent 28%, rgba(173, 87, 255, .06), transparent 64%);
+      filter: blur(58px);
       mix-blend-mode: screen;
-      opacity: .18;
-      will-change: transform;
-      animation: aurora-drift 18s ease-in-out infinite alternate;
+      opacity: .15;
+      transform-origin: center;
+      animation: water-flow 42s ease-in-out infinite alternate;
     }
 
-    .cosmic-drift-one {
-      top: 8%;
-      left: 12%;
-      width: 34vw;
-      height: 22vw;
-      background: radial-gradient(ellipse, rgba(73, 236, 255, .48), rgba(60, 85, 255, .12) 48%, transparent 72%);
-      transform: translate3d(calc(var(--pointer-x, 0) * 8px), calc(var(--pointer-y, 0) * 6px), 0) rotate(-16deg);
+    .distant-galaxy {
+      position: fixed;
+      z-index: 0;
+      pointer-events: none;
+      width: 13vw;
+      min-width: 120px;
+      aspect-ratio: 2.4;
+      border-radius: 50%;
+      background:
+        radial-gradient(ellipse at center, rgba(255, 250, 224, .46) 0 2%, rgba(117, 220, 255, .2) 8%, rgba(110, 89, 255, .09) 30%, transparent 68%),
+        conic-gradient(from 20deg, transparent, rgba(105, 235, 255, .16), transparent 32%, rgba(198, 112, 255, .14), transparent 70%);
+      filter: blur(3px);
+      mix-blend-mode: screen;
+      opacity: .14;
+      animation: galaxy-turn 68s linear infinite;
     }
 
-    .cosmic-drift-two {
-      right: 4%;
-      bottom: 6%;
-      width: 38vw;
-      height: 25vw;
-      background: radial-gradient(ellipse, rgba(192, 88, 255, .3), rgba(255, 94, 166, .12) 48%, transparent 72%);
-      transform: translate3d(calc(var(--pointer-x, 0) * -6px), calc(var(--pointer-y, 0) * -8px), 0) rotate(19deg);
-      animation-delay: -7s;
-      animation-duration: 23s;
-    }
-
-    .cosmic-drift-three {
-      top: 34%;
-      left: 38%;
-      width: 27vw;
-      height: 18vw;
-      background: radial-gradient(ellipse, rgba(112, 255, 179, .24), rgba(75, 194, 255, .08) 55%, transparent 75%);
-      transform: translate3d(calc(var(--pointer-x, 0) * 4px), calc(var(--pointer-y, 0) * -5px), 0) rotate(8deg);
-      animation-delay: -13s;
-      animation-duration: 27s;
-    }
+    .galaxy-one { top: 17%; left: 36%; rotate: -17deg; }
+    .galaxy-two { right: 24%; bottom: 22%; scale: .62; rotate: 24deg; animation-duration: 91s; animation-direction: reverse; }
 
     .cosmic-dust {
       position: fixed;
       top: 18%;
       left: 24%;
-      z-index: 1;
-      width: 3px;
-      height: 3px;
+      z-index: 0;
+      width: 2px;
+      height: 2px;
       pointer-events: none;
       border-radius: 50%;
-      background: rgba(255, 255, 255, .62);
+      background: rgba(255, 255, 255, .42);
       box-shadow:
-        9vw 13vh 0 rgba(130, 236, 255, .38),
-        24vw -7vh 0 1px rgba(255, 255, 255, .32),
-        42vw 8vh 0 rgba(174, 146, 255, .34),
-        58vw 31vh 0 rgba(255, 255, 255, .34),
-        67vw -2vh 0 rgba(126, 255, 202, .31),
-        16vw 49vh 0 rgba(255, 205, 132, .25),
-        37vw 57vh 0 1px rgba(255, 255, 255, .26),
-        73vw 48vh 0 rgba(131, 224, 255, .28);
-      opacity: .6;
-      transform: translate3d(calc(var(--pointer-x, 0) * 5px), calc(var(--pointer-y, 0) * 4px), 0);
-      animation: dust-breathe 8s ease-in-out infinite alternate;
+        9vw 13vh 0 rgba(130, 236, 255, .22),
+        24vw -7vh 0 rgba(255, 255, 255, .2),
+        42vw 8vh 0 rgba(174, 146, 255, .18),
+        58vw 31vh 0 rgba(255, 255, 255, .2),
+        67vw -2vh 0 rgba(126, 255, 202, .17),
+        16vw 49vh 0 rgba(255, 205, 132, .14),
+        37vw 57vh 0 rgba(255, 255, 255, .17),
+        73vw 48vh 0 rgba(131, 224, 255, .16);
+      opacity: .38;
+      animation: dust-breathe 12s ease-in-out infinite alternate;
     }
 
-    @keyframes aurora-drift {
-      0% { margin: -1.5% 0 0 -1%; scale: .96; opacity: .12; }
-      50% { margin: 1% 0 0 1.5%; scale: 1.04; opacity: .22; }
-      100% { margin: -1% 0 0 2%; scale: 1; opacity: .16; }
+    @keyframes water-flow {
+      0% { translate: -2% 1%; rotate: -3deg; scale: .98 1.04; }
+      33% { translate: 2% -1.5%; rotate: 1deg; scale: 1.04 .97; }
+      66% { translate: -1% 2%; rotate: 3deg; scale: .97 1.03; }
+      100% { translate: 2.5% -.5%; rotate: -1deg; scale: 1.02 .98; }
+    }
+
+    @keyframes galaxy-turn {
+      from { transform: rotate(0deg) scale(.96); opacity: .1; }
+      50% { opacity: .17; }
+      to { transform: rotate(360deg) scale(1.04); opacity: .1; }
     }
 
     @keyframes dust-breathe {
-      from { opacity: .34; filter: blur(.2px); }
-      to { opacity: .66; filter: blur(.8px); }
+      from { opacity: .22; filter: blur(.3px); }
+      to { opacity: .42; filter: blur(.8px); }
     }
 
     .lab-header {
@@ -246,7 +243,8 @@
 
     @media (max-width: 600px) {
       .space-backdrop { background-position: 41% center; }
-      .cosmic-drift { filter: blur(32px); opacity: .12; }
+      .deep-space-flow { opacity: .1; }
+      .distant-galaxy { opacity: .1; }
       .cosmic-dust { display: none; }
       .primary-action { width: min(100%, 320px); }
     }
@@ -262,9 +260,9 @@
 </head>
 <body>
   <div class="space-backdrop" aria-hidden="true"></div>
-  <div class="cosmic-drift cosmic-drift-one" aria-hidden="true"></div>
-  <div class="cosmic-drift cosmic-drift-two" aria-hidden="true"></div>
-  <div class="cosmic-drift cosmic-drift-three" aria-hidden="true"></div>
+  <div class="deep-space-flow" aria-hidden="true"></div>
+  <div class="distant-galaxy galaxy-one" aria-hidden="true"></div>
+  <div class="distant-galaxy galaxy-two" aria-hidden="true"></div>
   <div class="cosmic-dust" aria-hidden="true"></div>
   <header class="lab-header">
     <span class="lab-bubble one" aria-hidden="true"></span>
@@ -286,26 +284,6 @@
 
   <script>
     (() => {
-      const root = document.documentElement;
-      const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-      let pointerFrame;
-      let pointerX = 0;
-      let pointerY = 0;
-
-      const paintPointer = () => {
-        root.style.setProperty('--pointer-x', pointerX.toFixed(3));
-        root.style.setProperty('--pointer-y', pointerY.toFixed(3));
-        pointerFrame = undefined;
-      };
-
-      if (!reducedMotion && window.matchMedia('(pointer: fine)').matches) {
-        window.addEventListener('pointermove', (event) => {
-          pointerX = (event.clientX / window.innerWidth - .5) * 2;
-          pointerY = (event.clientY / window.innerHeight - .5) * 2;
-          if (!pointerFrame) pointerFrame = window.requestAnimationFrame(paintPointer);
-        }, { passive: true });
-      }
-
       const appId = document.documentElement.dataset.intercomAppId;
       const button = document.getElementById('open-chat');
       const status = document.getElementById('messenger-status');
