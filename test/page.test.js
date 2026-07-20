@@ -20,10 +20,11 @@ test('centers the laboratory title above the chat button without a top bar or pa
   assert.match(html, /noindex/i);
 });
 
-test('uses a polished friendly robot-dinosaur space landscape', () => {
+test('uses the user-provided GrowBot background image', () => {
   const html = page();
   assert.match(html, /class="space-backdrop"/);
-  assert.match(html, /assets\/growbot-robot-dinosaurs-space\.webp/);
+  assert.match(html, /assets\/growbot-background\.png/);
+  assert.ok(fs.existsSync(path.join(__dirname, '..', 'assets', 'growbot-background.png')));
   assert.match(html, /background-position:\s*center center/);
   assert.match(html, /\.space-backdrop::after/);
 });
@@ -42,7 +43,7 @@ test('keeps the foreground still with subtle fluid deep-space motion', () => {
   const html = page();
   assert.ok(fs.existsSync(path.join(__dirname, '..', 'assets', 'growbot-dinosaur-jungle.webp')));
   assert.match(html, /class="space-backdrop"/);
-  assert.match(html, /assets\/growbot-robot-dinosaurs-space\.webp/);
+  assert.match(html, /assets\/growbot-background\.png/);
   assert.match(html, /class="deep-space-flow"/);
   assert.match(html, /class="distant-galaxy galaxy-one"/);
   assert.match(html, /class="distant-galaxy galaxy-two"/);
