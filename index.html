@@ -145,82 +145,11 @@
       to { opacity: .42; filter: blur(.8px); }
     }
 
-    main {
-      position: relative;
-      z-index: 1;
-      display: grid;
-      place-items: center;
-      min-height: 100vh;
-      padding: 24px;
-    }
-
-    .launch-panel {
-      display: grid;
-      justify-items: center;
-      gap: 24px;
-      width: min(680px, 100%);
-      padding: 34px 28px 38px;
-      text-align: center;
-    }
-
-    h1 {
-      margin: 0;
-      color: #fff;
-      font-size: clamp(24px, 3.5vw, 42px);
-      font-weight: 500;
-      line-height: 1.08;
-      letter-spacing: -.025em;
-      text-wrap: balance;
-      text-shadow: 0 3px 24px rgba(0, 0, 0, .86), 0 0 42px rgba(76, 202, 255, .32);
-    }
-
-    .primary-action {
-      min-width: 190px;
-      padding: 16px 24px;
-      border: 1px solid rgba(189, 224, 255, .3);
-      border-radius: 999px;
-      background: linear-gradient(135deg, rgba(119, 255, 178, .98), rgba(116, 181, 255, .98));
-      box-shadow: 0 12px 40px rgba(50, 150, 255, .27), inset 0 1px rgba(255, 255, 255, .55);
-      color: #07111e;
-      cursor: pointer;
-      font: 650 16px/1.2 inherit;
-      transition: transform 160ms ease, background 160ms ease, color 160ms ease;
-    }
-
-    .primary-action:hover:not(:disabled) {
-      transform: translateY(-3px) scale(1.02);
-      background: linear-gradient(135deg, #a0ffc8, #9cc8ff);
-      color: #07111e;
-    }
-
-    .primary-action:focus-visible {
-      outline: 3px solid var(--focus);
-      outline-offset: 3px;
-    }
-
-    .primary-action:disabled {
-      cursor: wait;
-      opacity: .62;
-    }
-
-    .visually-hidden {
-      position: absolute;
-      width: 1px;
-      height: 1px;
-      padding: 0;
-      margin: -1px;
-      overflow: hidden;
-      clip: rect(0, 0, 0, 0);
-      white-space: nowrap;
-      border: 0;
-    }
-
     @media (max-width: 600px) {
       .space-backdrop { background-position: 41% center; }
       .deep-space-flow { opacity: .1; }
       .distant-galaxy { opacity: .1; }
       .cosmic-dust { display: none; }
-      .primary-action { width: min(100%, 320px); }
     }
 
     @media (prefers-reduced-motion: reduce) {
@@ -238,84 +167,23 @@
   <div class="distant-galaxy galaxy-one" aria-hidden="true"></div>
   <div class="distant-galaxy galaxy-two" aria-hidden="true"></div>
   <div class="cosmic-dust" aria-hidden="true"></div>
-  <main>
-    <section class="launch-panel" aria-labelledby="page-title">
-      <h1 id="page-title">GrowBot Test Laboratory</h1>
-      <button class="primary-action" id="open-chat" type="button" disabled>Loading chat…</button>
-      <span class="visually-hidden" id="messenger-status" aria-live="polite">Connecting to chat.</span>
-    </section>
-  </main>
-
   <script>
     (() => {
       const appId = document.documentElement.dataset.intercomAppId;
-      const button = document.getElementById('open-chat');
-      const status = document.getElementById('messenger-status');
-      let loaderReady = false;
-      let failed = false;
-      let openingTimer;
 
       window.intercomSettings = { app_id: appId };
-
-      const markLoaderReady = () => {
-        if (loaderReady || failed) return;
-        loaderReady = true;
-        button.disabled = false;
-        button.textContent = 'Open chat';
-        status.textContent = 'Chat loaded. Open it to continue.';
-      };
-
-      const markOpened = () => {
-        window.clearTimeout(openingTimer);
-        button.disabled = false;
-        button.textContent = 'Open chat';
-        status.textContent = 'Chat opened successfully.';
-      };
-
-      const markFailed = () => {
-        if (failed) return;
-        failed = true;
-        window.clearTimeout(openingTimer);
-        button.disabled = true;
-        button.textContent = 'Chat unavailable';
-        status.textContent = 'Chat could not load. Refresh the page or check content-blocking settings.';
-      };
-
-      const markOpenFailed = () => {
-        button.disabled = false;
-        button.textContent = 'Try again';
-        status.textContent = 'Chat could not open. Try again or disable content blocking for this page.';
-      };
 
       window.Intercom = window.Intercom || function () {
         (window.Intercom.q = window.Intercom.q || []).push(arguments);
       };
-
-      window.Intercom('onShow', markOpened);
 
       const script = document.createElement('script');
       script.async = true;
       script.src = `https://widget.intercom.io/widget/${encodeURIComponent(appId)}`;
       script.onload = () => {
         window.Intercom('boot', { app_id: appId });
-        markLoaderReady();
       };
-      script.onerror = markFailed;
       document.head.appendChild(script);
-
-      window.setTimeout(() => {
-        if (!loaderReady) markFailed();
-      }, 12000);
-
-      button.addEventListener('click', () => {
-        if (!loaderReady || failed) return;
-        button.disabled = true;
-        button.textContent = 'Opening chat…';
-        status.textContent = 'Opening chat.';
-        window.Intercom('show');
-        window.clearTimeout(openingTimer);
-        openingTimer = window.setTimeout(markOpenFailed, 8000);
-      });
     })();
   </script>
 </body>

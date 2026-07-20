@@ -9,14 +9,10 @@ function page() {
   return fs.readFileSync(pagePath, 'utf8');
 }
 
-test('centers the laboratory title above the chat button without a top bar or page avatar', () => {
+test('shows only the background and Intercom widget with no page copy or custom controls', () => {
   const html = page();
   const body = html.match(/<body>([\s\S]*?)<script>/i)?.[1] || '';
-  assert.equal((body.match(/<button\b/gi) || []).length, 1);
-  assert.match(body, /<main[^>]*>[\s\S]*class="launch-panel"[\s\S]*<h1[^>]+id="page-title"[^>]*>GrowBot Test Laboratory<\/h1>[\s\S]*id="open-chat"/i);
-  assert.doesNotMatch(body, /<header|class="growbot-avatar"|growbot-profile\.webp/);
-  assert.match(body, /<button[^>]+id="open-chat"[^>]*>Loading chat…<\/button>/i);
-  assert.doesNotMatch(body, /<p\b|<aside|Separate from|production/i);
+  assert.doesNotMatch(body, /<main|<header|<h1|<button|<p\b|<aside|GrowBot Test Laboratory|Open chat/i);
   assert.match(html, /noindex/i);
 });
 
@@ -29,12 +25,11 @@ test('uses the user-provided GrowBot background image', () => {
   assert.match(html, /\.space-backdrop::after/);
 });
 
-test('uses restrained title typography and the GrowBot dinosaur favicon', () => {
+test('uses the GrowBot dinosaur favicon', () => {
   const html = page();
   assert.match(html, /<link\s+rel="icon"\s+type="image\/png"\s+sizes="32x32"\s+href="assets\/favicon-32\.png">/i);
   assert.match(html, /<link\s+rel="apple-touch-icon"\s+href="assets\/apple-touch-icon\.png">/i);
-  assert.match(html, /h1\s*\{[\s\S]*?font-size:\s*clamp\(24px,\s*3\.5vw,\s*42px\)/);
-  assert.match(html, /h1\s*\{[\s\S]*?font-weight:\s*500/);
+
   assert.ok(fs.existsSync(path.join(__dirname, '..', 'assets', 'favicon-32.png')));
   assert.ok(fs.existsSync(path.join(__dirname, '..', 'assets', 'apple-touch-icon.png')));
 });
@@ -65,16 +60,10 @@ test('loads only the Intercom test workspace for anonymous visitors', () => {
   assert.doesNotMatch(html, /user_id|user_hash|email\s*:/i);
 });
 
-test('offers a clear chat action and verifies Messenger visibility', () => {
+test('boots the default Intercom Messenger launcher without custom chat controls', () => {
   const html = page();
-  assert.match(html, /id="open-chat"/);
-  assert.match(html, /Open chat/i);
-  assert.match(html, /id="messenger-status"/);
-  assert.match(html, /Intercom\(['"]onShow['"],\s*markOpened\)/);
-  assert.match(html, /Intercom\(['"]show['"]\)/);
-  assert.match(html, /openingTimer/);
-  assert.match(html, /could not (load|open)/i);
-  assert.doesNotMatch(html, /Test Messenger is ready/i);
+  assert.match(html, /Intercom\(['"]boot['"],\s*\{\s*app_id:\s*appId\s*\}\)/);
+  assert.doesNotMatch(html, /id="open-chat"|Intercom\(['"]show['"]\)|hide_default_launcher/i);
 });
 
 test('configures the approved standalone hostname', () => {
@@ -82,10 +71,8 @@ test('configures the approved standalone hostname', () => {
   assert.equal(fs.readFileSync(cnamePath, 'utf8').trim(), 'growbot.chat');
 });
 
-test('uses accessible and responsive page foundations', () => {
+test('uses responsive page foundations', () => {
   const html = page();
-  assert.match(html, /<main/);
-  assert.match(html, /aria-live="polite"/);
   assert.match(html, /@media\s*\(max-width:/);
   assert.match(html, /prefers-reduced-motion/);
 });
