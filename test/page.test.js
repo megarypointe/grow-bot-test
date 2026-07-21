@@ -70,6 +70,7 @@ test('uses the default desktop launcher and a guaranteed mobile launcher', () =>
   assert.match(html, /Intercom\(['"]onHide['"],/);
   assert.match(html, /#mobile-chat-launcher\s*\{[\s\S]*display:\s*none/);
   assert.match(html, /@media\s*\(max-width:\s*600px\)[\s\S]*#mobile-chat-launcher\s*\{[\s\S]*display:\s*(?:grid|flex|block)/);
+  assert.ok(html.indexOf("window.Intercom('boot', intercomSettings)") < html.indexOf("script.src = `https://widget.intercom.io/widget/"));
 });
 
 test('configures the approved standalone hostname', () => {

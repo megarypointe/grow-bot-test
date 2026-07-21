@@ -212,14 +212,13 @@
       mobileLauncher.hidden = !isMobile;
       mobileLauncher.addEventListener('click', () => window.Intercom('show'));
 
+      window.Intercom('boot', intercomSettings);
+      window.Intercom('onShow', () => { mobileLauncher.hidden = true; });
+      window.Intercom('onHide', () => { mobileLauncher.hidden = !mobileMedia.matches; });
+
       const script = document.createElement('script');
       script.async = true;
       script.src = `https://widget.intercom.io/widget/${encodeURIComponent(appId)}`;
-      script.onload = () => {
-        window.Intercom('boot', intercomSettings);
-        window.Intercom('onShow', () => { mobileLauncher.hidden = true; });
-        window.Intercom('onHide', () => { mobileLauncher.hidden = !mobileMedia.matches; });
-      };
       document.head.appendChild(script);
     })();
   </script>
