@@ -127,6 +127,28 @@
       animation: dust-breathe 12s ease-in-out infinite alternate;
     }
 
+    #mobile-chat-launcher {
+      position: fixed;
+      right: 18px;
+      bottom: calc(18px + env(safe-area-inset-bottom, 0px));
+      z-index: 2147483000;
+      display: none;
+      width: 58px;
+      height: 58px;
+      padding: 0;
+      border: 1px solid rgba(255, 255, 255, .28);
+      border-radius: 50%;
+      color: #07111e;
+      background: #ffffff;
+      box-shadow: 0 12px 34px rgba(0, 0, 0, .38);
+      cursor: pointer;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    #mobile-chat-launcher[hidden] { display: none !important; }
+    #mobile-chat-launcher:focus-visible { outline: 3px solid var(--focus); outline-offset: 3px; }
+    #mobile-chat-launcher svg { width: 28px; height: 28px; }
+
     @keyframes water-flow {
       0% { translate: -2% 1%; rotate: -3deg; scale: .98 1.04; }
       33% { translate: 2% -1.5%; rotate: 1deg; scale: 1.04 .97; }
@@ -150,6 +172,7 @@
       .deep-space-flow { opacity: .1; }
       .distant-galaxy { opacity: .1; }
       .cosmic-dust { display: none; }
+      #mobile-chat-launcher { display: grid; place-items: center; }
     }
 
     @media (prefers-reduced-motion: reduce) {
@@ -167,21 +190,35 @@
   <div class="distant-galaxy galaxy-one" aria-hidden="true"></div>
   <div class="distant-galaxy galaxy-two" aria-hidden="true"></div>
   <div class="cosmic-dust" aria-hidden="true"></div>
+  <button id="mobile-chat-launcher" type="button" aria-label="Open Grow Bot chat">
+    <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+      <path fill="currentColor" d="M4 4h16v12H8l-4 4V4Zm3 4v2h10V8H7Zm0 4v2h7v-2H7Z"/>
+    </svg>
+  </button>
   <script>
     (() => {
       const appId = document.documentElement.dataset.intercomAppId;
+      const mobileLauncher = document.getElementById('mobile-chat-launcher');
+      const mobileMedia = window.matchMedia('(max-width: 600px)');
+      const isMobile = window.matchMedia('(max-width: 600px)').matches;
+      const intercomSettings = { app_id: appId, hide_default_launcher: isMobile };
 
-      window.intercomSettings = { app_id: appId };
+      window.intercomSettings = intercomSettings;
 
       window.Intercom = window.Intercom || function () {
         (window.Intercom.q = window.Intercom.q || []).push(arguments);
       };
 
+      mobileLauncher.hidden = !isMobile;
+      mobileLauncher.addEventListener('click', () => window.Intercom('show'));
+
       const script = document.createElement('script');
       script.async = true;
       script.src = `https://widget.intercom.io/widget/${encodeURIComponent(appId)}`;
       script.onload = () => {
-        window.Intercom('boot', { app_id: appId });
+        window.Intercom('boot', intercomSettings);
+        window.Intercom('onShow', () => { mobileLauncher.hidden = true; });
+        window.Intercom('onHide', () => { mobileLauncher.hidden = !mobileMedia.matches; });
       };
       document.head.appendChild(script);
     })();
