@@ -9,11 +9,10 @@ function page() {
   return fs.readFileSync(pagePath, 'utf8');
 }
 
-test('shows only the background and a mobile chat fallback with no page copy', () => {
+test('shows only the background and Intercom widget with no page copy or custom controls', () => {
   const html = page();
   const body = html.match(/<body>([\s\S]*?)<script>/i)?.[1] || '';
-  assert.doesNotMatch(body, /<main|<header|<h1|<p\b|<aside|GrowBot Test Laboratory|Open chat/i);
-  assert.match(body, /<button[^>]+id="mobile-chat-launcher"[^>]+aria-label="Open Grow Bot chat"/i);
+  assert.doesNotMatch(body, /<main|<header|<h1|<button|<p\b|<aside|GrowBot Test Laboratory|Open chat|mobile-chat-launcher/i);
   assert.match(html, /noindex/i);
 });
 
@@ -61,15 +60,11 @@ test('loads only the Intercom test workspace for anonymous visitors', () => {
   assert.doesNotMatch(html, /user_id|user_hash|email\s*:/i);
 });
 
-test('uses the default desktop launcher and a guaranteed mobile launcher', () => {
+test('force-enables the actual Intercom default launcher on desktop and mobile', () => {
   const html = page();
-  assert.match(html, /const\s+isMobile\s*=\s*window\.matchMedia\(['"]\(max-width:\s*600px\)['"]\)\.matches/);
-  assert.match(html, /hide_default_launcher:\s*isMobile/);
-  assert.match(html, /mobileLauncher\.addEventListener\(['"]click['"],\s*\(\)\s*=>\s*window\.Intercom\(['"]show['"]\)\)/);
-  assert.match(html, /Intercom\(['"]onShow['"],/);
-  assert.match(html, /Intercom\(['"]onHide['"],/);
-  assert.match(html, /#mobile-chat-launcher\s*\{[\s\S]*display:\s*none/);
-  assert.match(html, /@media\s*\(max-width:\s*600px\)[\s\S]*#mobile-chat-launcher\s*\{[\s\S]*display:\s*(?:grid|flex|block)/);
+  assert.match(html, /hide_default_launcher:\s*false/);
+  assert.match(html, /window\.Intercom\(['"]boot['"],\s*intercomSettings\)/);
+  assert.doesNotMatch(html, /mobile-chat-launcher|custom_launcher_selector|Intercom\(['"]show['"]\)|onShow|onHide/i);
   assert.ok(html.indexOf("window.Intercom('boot', intercomSettings)") < html.indexOf("script.src = `https://widget.intercom.io/widget/"));
 });
 
