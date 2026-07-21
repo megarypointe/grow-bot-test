@@ -60,12 +60,15 @@ test('loads only the Intercom test workspace for anonymous visitors', () => {
   assert.doesNotMatch(html, /user_id|user_hash|email\s*:/i);
 });
 
-test('force-enables the actual Intercom default launcher on desktop and mobile', () => {
+test('uses Intercom’s official basic-web loader and force-enables its real launcher', () => {
   const html = page();
+  assert.match(html, /api_base:\s*['"]https:\/\/api-iam\.intercom\.io['"]/);
   assert.match(html, /hide_default_launcher:\s*false/);
-  assert.match(html, /window\.Intercom\(['"]boot['"],\s*intercomSettings\)/);
+  assert.match(html, /i\.c\s*=\s*function\s*\(args\)\s*\{\s*i\.q\.push\(args\)/);
+  assert.match(html, /document\.readyState\s*===\s*['"]complete['"]/);
+  assert.match(html, /addEventListener\(['"]load['"],\s*load/);
   assert.doesNotMatch(html, /mobile-chat-launcher|custom_launcher_selector|Intercom\(['"]show['"]\)|onShow|onHide/i);
-  assert.ok(html.indexOf("window.Intercom('boot', intercomSettings)") < html.indexOf("script.src = `https://widget.intercom.io/widget/"));
+  assert.doesNotMatch(html, /Intercom\(['"]boot['"]/);
 });
 
 test('configures the approved standalone hostname', () => {
